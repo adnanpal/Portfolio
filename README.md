@@ -1,77 +1,97 @@
-<<<<<<< HEAD
-# React + TypeScript + Vite
+# Adnan Pal - Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and responsive developer portfolio built to showcase my projects, technical skills, and professional journey as a Full-Stack Developer.
 
-Currently, two official plugins are available:
+## 🚀 About
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This portfolio highlights my experience in web development, featured projects, technical skills, and contact information. It serves as a central place for recruiters and developers to learn more about my work.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* Framer Motion
+* Lucide React
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* Responsive design
+* Modern UI/UX
+* Project showcase
+* Skills section
+* Contact section
+* Resume access
+* Smooth animations
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📂 Featured Projects
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### BuildNet
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+A full-stack professional networking platform built using React, TypeScript, Strapi, PostgreSQL, and Clerk Authentication.
+
+**Key Features:**
+
+* User authentication
+* Profile management
+* Dynamic content feed
+* Responsive user interface
+* API integration
+
+### Notes Manager
+
+A Java-based application built using Hibernate ORM for efficient note management.
+
+### Data Structure Visualizer
+
+An interactive Python application for visualizing common data structures and algorithms.
+
+## 📸 Live Demo
+
+Portfolio Website:
+[Add your deployed Vercel URL here]
+
+## 🧑‍💻 Local Setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/adnanpal/Portfolio.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Navigate to the project directory:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd Portfolio
 ```
-=======
-# Adnan Pal Portfolio
->>>>>>> 8e1baca1e558e5f302a20f1014f10e6e978e7dc4
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+## 📬 Contact
+
+**Adnan Pal**
+
+* Email: [paladnan70930@gmail.com](mailto:paladnan70930@gmail.com)
+* LinkedIn: https://www.linkedin.com/in/adnan-pal-140534348
+* GitHub: https://github.com/adnanpal
+
+---
+
+Built with React, TypeScript, and a passion for creating meaningful software.
