@@ -7,9 +7,11 @@ const INITIAL_FORM = { name: "", email: "", subject: "", message: "" };
 
 export default function ContactForm() {
   const [form, setForm] = useState(INITIAL_FORM);
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState<"sent" | "error" | null>(null);
 
-  const handleChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const handleSubmit = () => {
     if (!form.name || !form.email || !form.message) { setStatus("error"); return; }
@@ -42,8 +44,13 @@ export default function ContactForm() {
     marginBottom: "8px",
   };
 
-  const handleFocus = (e) => e.target.style.borderColor = "var(--border-hover)";
-  const handleBlur  = (e) => e.target.style.borderColor = "var(--input-border)";
+  const handleFocus = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => e.target.style.borderColor = "var(--border-hover)";
+  
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => e.target.style.borderColor = "var(--input-border)";
 
   return (
     <div className="rounded-lg p-6" style={{ border: "1px solid var(--border)" }}>

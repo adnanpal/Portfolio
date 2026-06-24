@@ -5,7 +5,7 @@ import { DownloadIcon } from "../icons/Icons";
 
 export default function Hero() {
   const role = useTypewriter(ROLES);
-  const hireMeHref = `mailto:${OWNER.email}?subject=Hiring%20Inquiry&body=Hi%20Adnan%2C%20I%20came%20across%20your%20portfolio%20and%20would%20love%20to%20discuss%20an%20opportunity.`;
+  
 
   return (
     <section className="min-h-screen flex flex-col justify-center px-6 pt-20 max-w-5xl mx-auto relative">

@@ -7,9 +7,18 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-const ThemeContext = createContext(null);
+type ThemeContextType = {
+  theme: string;
+  toggleTheme: () => void;
+};
 
-export function ThemeProvider({ children }) {
+const ThemeContext = createContext<ThemeContextType | null>(null);
+
+export function ThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [theme, setTheme] = useState(() => {
     try {
       return localStorage.getItem("portfolio-theme") || "dark";
@@ -34,6 +43,13 @@ export function ThemeProvider({ children }) {
   );
 }
 
-export function useTheme() {
-  return useContext(ThemeContext);
+export function useTheme(): ThemeContextType {
+  const context = useContext(ThemeContext);
+
+  if (!context) {
+    throw new Error("useTheme must be used within ThemeProvider");
+  }
+
+  return context;
 }
+  

@@ -1,7 +1,11 @@
 // src/components/sections/Projects/ProjectCard.jsx
 import { GithubIcon, ExternalIcon } from "../../icons/Icons";
 
-export default function ProjectCard({ project }) {
+type ProjectCardProps = {
+  project: any;
+};
+
+export default function ProjectCard({ project }: ProjectCardProps) {
   const { name, desc, tags, status, github, demo } = project;
   const isInProgress = status === "In Progress";
 
@@ -28,7 +32,7 @@ export default function ProjectCard({ project }) {
       <p className="text-sm leading-relaxed mb-4 flex-1" style={{ color: "var(--text-muted)" }}>{desc}</p>
 
       <div className="flex flex-wrap gap-2 mb-4">
-        {tags.map((tag) => (
+        {tags.map((tag: string) => (
           <span
             key={tag}
             className="text-xs font-mono px-2 py-1 rounded-sm"

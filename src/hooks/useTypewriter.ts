@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
  
-export function useTypewriter(words, speed = 80, pause = 1800) {
+export function useTypewriter(
+  words: string[],
+  speed = 80,
+  pause = 1800
+) {
   const [display, setDisplay] = useState("");
   const [wordIdx, setWordIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
@@ -8,7 +12,7 @@ export function useTypewriter(words, speed = 80, pause = 1800) {
  
   useEffect(() => {
     const current = words[wordIdx];
-    let timeout;
+    let timeout: ReturnType<typeof setTimeout>;
  
     if (!deleting && charIdx <= current.length) {
       timeout = setTimeout(() => {

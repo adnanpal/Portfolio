@@ -1,5 +1,12 @@
 // src/components/ui/SectionHeader.jsx
-export default function SectionHeader({ index, label, title, accent }) {
+type SectionHeaderProps = {
+  index: string;
+  label: string;
+  title: string;
+  accent: string;
+};
+export default function SectionHeader({ index, label, title, accent }: SectionHeaderProps) {
+
   return (
     <div className="mb-12">
       <p className="font-mono text-xs tracking-[0.3em] uppercase mb-3" style={{ color: "var(--accent)" }}>

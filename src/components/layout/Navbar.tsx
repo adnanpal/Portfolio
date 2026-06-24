@@ -24,10 +24,10 @@ export default function NavBar() {
 
   const navStyle = scrolled
     ? {
-        backgroundColor: "color-mix(in srgb, var(--bg) 90%, transparent)",
-        backdropFilter: "blur(12px)",
-        borderBottom: "1px solid var(--border)",
-      }
+      backgroundColor: "color-mix(in srgb, var(--bg) 90%, transparent)",
+      backdropFilter: "blur(12px)",
+      borderBottom: "1px solid var(--border)",
+    }
     : { backgroundColor: "transparent" };
 
   return (
@@ -35,7 +35,7 @@ export default function NavBar() {
       <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <span className="font-mono font-bold tracking-widest text-sm uppercase" style={{ color: "var(--accent)" }}>
-          A<span style={{ color: "var(--lavender)" }}>_</span>
+          AP<span style={{ color: "var(--lavender)" }}>_</span>
         </span>
 
         {/* Desktop links */}
@@ -46,8 +46,12 @@ export default function NavBar() {
                 href={`#${l.toLowerCase()}`}
                 className="font-mono tracking-wide text-sm transition-colors duration-200 hover:opacity-100"
                 style={{ color: "var(--text-muted)" }}
-                onMouseEnter={e => e.target.style.color = "var(--lavender)"}
-                onMouseLeave={e => e.target.style.color = "var(--text-muted)"}
+                onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                  (e.currentTarget.style.color = "var(--lavender)")
+                }
+                onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) =>
+                  (e.currentTarget.style.color = "var(--lavender)")
+                }
               >
                 {l}
               </a>
