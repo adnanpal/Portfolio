@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+/* Thin, theme-aware scrollbar for the LeetCode recent-submissions list */
+.lc-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-hover) transparent;
+}
+.lc-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.lc-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.lc-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--border-hover);
+  border-radius: 999px;
+}
