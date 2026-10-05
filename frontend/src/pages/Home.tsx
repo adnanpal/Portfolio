@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useInView } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { toast } from "sonner";
 import {
   Activity,
@@ -246,19 +246,29 @@ export default function Home() {
     }
   };
 
+  const handleSectionNavigation = (event: MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    event.preventDefault();
+    const target = document.getElementById(sectionId);
+    if (!target) return;
+    setMobileOpen(false);
+    window.history.pushState(null, "", `#${sectionId}`);
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - 88;
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-white text-black transition-colors duration-500 dark:bg-[#09090b] dark:text-white" data-testid="portfolio-page">
       <Toaster />
       <header className="fixed inset-x-0 top-0 z-50 border-b border-black/10 bg-white/90 backdrop-blur-xl dark:border-white/10 dark:bg-[#09090b]/90" data-testid="site-header">
         <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-8 lg:px-12">
-          <a href="#top" className="group flex items-center gap-3" data-testid="nav-logo-link">
+          <a href="#top" onClick={(event) => handleSectionNavigation(event, "top")} className="group flex items-center gap-3" data-testid="nav-logo-link">
             <span className="flex h-9 w-9 items-center justify-center bg-black font-mono text-xs font-bold text-white transition-transform duration-200 group-hover:rotate-6 dark:bg-white dark:text-black">AP</span>
             <span className="font-heading text-sm font-bold tracking-[-0.04em]" data-testid="nav-logo-text">ADNAN.PAL</span>
           </a>
 
           <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary navigation" data-testid="desktop-navigation">
             {navItems.map(([number, label, href]) => (
-              <a key={href} href={`#${href}`} className="group flex items-center gap-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-neutral-500 transition-colors duration-200 hover:text-black dark:hover:text-white" data-testid={`nav-${href}-link`}>
+              <a key={href} href={`#${href}`} onClick={(event) => handleSectionNavigation(event, href)} className="group flex items-center gap-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-neutral-500 transition-colors duration-200 hover:text-black dark:hover:text-white" data-testid={`nav-${href}-link`}>
                 <span className="text-[9px] text-neutral-400">{number}</span>
                 <span>{label}</span>
               </a>
@@ -280,7 +290,7 @@ export default function Home() {
             <motion.nav initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden border-t border-black/10 bg-white px-4 py-4 dark:border-white/10 dark:bg-[#09090b] lg:hidden" aria-label="Mobile navigation" data-testid="mobile-navigation">
               <div className="grid gap-1">
                 {navItems.map(([number, label, href]) => (
-                  <a key={href} href={`#${href}`} onClick={() => setMobileOpen(false)} className="flex items-center justify-between border-b border-black/10 py-3 font-mono text-xs uppercase tracking-[0.16em] dark:border-white/10" data-testid={`mobile-nav-${href}-link`}>
+                  <a key={href} href={`#${href}`} onClick={(event) => handleSectionNavigation(event, href)} className="flex items-center justify-between border-b border-black/10 py-3 font-mono text-xs uppercase tracking-[0.16em] dark:border-white/10" data-testid={`mobile-nav-${href}-link`}>
                     <span><span className="mr-3 text-neutral-400">{number}</span>{label}</span><ArrowUpRight size={14} aria-hidden="true" />
                   </a>
                 ))}
@@ -303,7 +313,7 @@ export default function Home() {
               <div className="shrink-0 font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-500" data-testid="hero-location"><MapPin size={14} className="mb-2" aria-hidden="true" />Navi Mumbai<br />India</div>
             </motion.div>
             <motion.div variants={reveal} className="mt-10 flex flex-wrap items-center gap-5" data-testid="hero-actions">
-              <a href="#projects" className="inline-flex items-center gap-3 bg-black px-5 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-white transition-[transform,background] duration-200 hover:-translate-y-1 hover:bg-neutral-700 dark:bg-white dark:text-black dark:hover:bg-neutral-200" data-testid="hero-view-projects-button">View projects <ArrowDownRight size={15} aria-hidden="true" /></a>
+              <a href="#projects" onClick={(event) => handleSectionNavigation(event, "projects")} className="inline-flex items-center gap-3 bg-black px-5 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-white transition-[transform,background] duration-200 hover:-translate-y-1 hover:bg-neutral-700 dark:bg-white dark:text-black dark:hover:bg-neutral-200" data-testid="hero-view-projects-button">View projects <ArrowDownRight size={15} aria-hidden="true" /></a>
               <a href="mailto:paladnan70930@gmail.com?subject=Hiring%20Inquiry" className="inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em] transition-[gap,color] duration-200 hover:gap-3 hover:text-neutral-500" data-testid="hero-get-in-touch-link">Get in touch <ArrowUpRight size={15} aria-hidden="true" /></a>
             </motion.div>
           </motion.div>
@@ -351,7 +361,7 @@ export default function Home() {
         <section id="contact" className="mx-auto max-w-7xl px-4 py-20 sm:px-8 sm:py-28 lg:px-12" data-testid="contact-section"><div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]"><div><SectionLabel number="06" children="Contact" /><h2 className="mt-7 max-w-lg font-heading text-5xl font-bold uppercase leading-[0.88] tracking-[-0.07em] sm:text-7xl" data-testid="contact-heading">Let's<br /><span className="text-neutral-400">connect.</span></h2><p className="mt-8 max-w-md text-lg leading-relaxed text-neutral-600 dark:text-neutral-400" data-testid="contact-description">Open to internship roles, freelance projects, and interesting collaborations. Drop a line.</p><div className="mt-10 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.15em]" data-testid="contact-availability"><span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" /> Available for internships & freelance work</div></div><div className="border-t-2 border-black pt-6 dark:border-white"><div className="grid gap-3" data-testid="contact-links-grid"><a href="mailto:paladnan70930@gmail.com" className="group flex items-center justify-between border-b border-black/15 py-5 transition-[padding,color] duration-200 hover:pl-2 hover:text-neutral-500 dark:border-white/15" data-testid="contact-email-link"><span className="flex items-center gap-4"><Mail size={20} strokeWidth={1.5} aria-hidden="true" /><span><span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">Email</span><span className="mt-1 block text-lg">paladnan70930@gmail.com</span></span></span><ArrowUpRight size={19} aria-hidden="true" /></a><a href="https://www.linkedin.com/in/adnan-pal-140534348" target="_blank" rel="noreferrer" className="group flex items-center justify-between border-b border-black/15 py-5 transition-[padding,color] duration-200 hover:pl-2 hover:text-neutral-500 dark:border-white/15" data-testid="contact-linkedin-link"><span className="flex items-center gap-4"><Linkedin size={20} strokeWidth={1.5} aria-hidden="true" /><span><span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">LinkedIn</span><span className="mt-1 block text-lg">linkedin.com/in/adnanpal</span></span></span><ExternalLink size={18} aria-hidden="true" /></a><a href="https://github.com/adnanpal" target="_blank" rel="noreferrer" className="group flex items-center justify-between border-b border-black/15 py-5 transition-[padding,color] duration-200 hover:pl-2 hover:text-neutral-500 dark:border-white/15" data-testid="contact-github-link"><span className="flex items-center gap-4"><Github size={20} strokeWidth={1.5} aria-hidden="true" /><span><span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">GitHub</span><span className="mt-1 block text-lg">github.com/adnanpal</span></span></span><ExternalLink size={18} aria-hidden="true" /></a></div><div className="mt-10 flex flex-wrap gap-3"><a href="mailto:paladnan70930@gmail.com?subject=Hiring%20Inquiry" className="inline-flex items-center gap-3 bg-black px-5 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-white transition-[transform,background] duration-200 hover:-translate-y-1 hover:bg-neutral-700 dark:bg-white dark:text-black dark:hover:bg-neutral-200" data-testid="contact-hire-me-button">Hire me <ArrowUpRight size={15} aria-hidden="true" /></a><button type="button" onClick={() => void copyEmail()} className="inline-flex items-center gap-2 border border-black px-4 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.12em] transition-[background,color] duration-200 hover:bg-black hover:text-white dark:border-white dark:hover:bg-white dark:hover:text-black" data-testid="contact-copy-email-button">{copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}{copied ? "Copied" : "Copy email"}</button></div></div></div></section>
       </main>
 
-      <footer className="border-t border-black bg-[#f5f5f3] dark:border-white dark:bg-[#121215]" data-testid="site-footer"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-7 font-mono text-[10px] uppercase tracking-[0.14em] text-neutral-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12"><span data-testid="footer-copyright">© 2026 Adnan Pal — Built with React & Tailwind</span><span data-testid="footer-location">Navi Mumbai, India</span><a href="#top" className="inline-flex items-center gap-2 transition-colors hover:text-black dark:hover:text-white" data-testid="footer-back-to-top-link">Back to top <ChevronRight size={13} className="-rotate-90" aria-hidden="true" /></a></div></footer>
+      <footer className="border-t border-black bg-[#f5f5f3] dark:border-white dark:bg-[#121215]" data-testid="site-footer"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-7 font-mono text-[10px] uppercase tracking-[0.14em] text-neutral-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12"><span data-testid="footer-copyright">© 2026 Adnan Pal — Built with React & Tailwind</span><span data-testid="footer-location">Navi Mumbai, India</span><a href="#top" onClick={(event) => handleSectionNavigation(event, "top")} className="inline-flex items-center gap-2 transition-colors hover:text-black dark:hover:text-white" data-testid="footer-back-to-top-link">Back to top <ChevronRight size={13} className="-rotate-90" aria-hidden="true" /></a></div></footer>
     </div>
   );
 }

@@ -16,7 +16,7 @@ One-page personal portfolio for Adnan Pal, a B.Sc Computer Science student and f
 
 ## Key flows
 
-1. Visitors use the sticky navigation or hero CTAs to jump through the one-page portfolio.
+1. Visitors use the sticky navigation or hero CTAs to smoothly jump through the one-page portfolio, including from the mobile menu with a fixed-header offset.
 2. Visitors switch between AWS, Vercel, and Render tabs to review deployment capabilities.
 3. Visitors open project repositories/live demos, the resume, or social links in their existing destinations.
 4. Visitors use the mailto contact links or copy the email address. There is no backend contact form.
