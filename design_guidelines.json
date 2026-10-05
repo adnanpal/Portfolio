@@ -1,0 +1,70 @@
+{
+  "theme": {
+    "primary_style": "Editorial Monochrome",
+    "light_mode": {
+      "background": "#FFFFFF",
+      "surface": "#F8F8F8",
+      "surface_hover": "#F0F0F0",
+      "text_primary": "#0A0A0A",
+      "text_secondary": "#555555",
+      "border": "#1A1A1A",
+      "border_subtle": "#E0E0E0",
+      "accent": "#000000",
+      "contrast_high": "#000000"
+    },
+    "dark_mode": {
+      "background": "#09090B",
+      "surface": "#121215",
+      "surface_hover": "#1A1A1E",
+      "text_primary": "#FAFAFA",
+      "text_secondary": "#A1A1AA",
+      "border": "#27272A",
+      "border_subtle": "#18181B",
+      "accent": "#FFFFFF",
+      "contrast_high": "#FFFFFF"
+    }
+  },
+  "typography": {
+    "font_family_headings": "Space Grotesk, Outfit, or Syne (Display Editorial Sans)",
+    "font_family_body": "Inter, Geist, or JetBrains Mono (for code elements)",
+    "hierarchy": {
+      "h1_hero": "text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tighter uppercase leading-none",
+      "h2_section": "text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight uppercase border-b-2 border-current pb-3 mb-8",
+      "h3_card": "text-xl sm:text-2xl font-bold tracking-tight",
+      "subtext": "text-base sm:text-lg text-muted-foreground font-normal leading-relaxed",
+      "mono_label": "font-mono text-xs sm:text-sm tracking-widest uppercase text-neutral-500"
+    }
+  },
+  "layout_and_spacing": {
+    "container_max_width": "max-w-7xl mx-auto px-4 sm:px-8 lg:px-12",
+    "section_padding": "py-16 sm:py-24 lg:py-32",
+    "grid_gap": "gap-6 sm:gap-8 lg:gap-10",
+    "bento_grid_mode": "Tetris grid with 1px solid borders, offset cards, asymmetric tall spans and sharp contrast borders"
+  },
+  "components_structure": {
+    "navbar": "Sticky header with backdrop blur (bg-white/90 dark:bg-black/90 border-b border-black/10 dark:border-white/10 z-50). Contains Logo 'ADNAN.PAL', Nav links (About, Skills, Deployments, Projects, LeetCode, Contact), Theme toggle button, and 'HIRE ME' CTA button.",
+    "hero_section": "Editorial stark monochrome title block with animated typewriter/character stagger title, interactive terminal card ('init portfolio.exe' and 'cat adnan.json'), quick stats badge, and call-to-action buttons with inverse hover states.",
+    "about_section": "Two-column editorial split. Left: Large typography '01 — ABOUT / CODE, DESIGN, REPEAT.' Right: Full story, education at Pillai College (2023-2026), status, and interactive resume viewer/download button.",
+    "skills_section": "Swiss grid categorized layout (Frontend, Backend, Database, Tools) with interactive skill tags, proficiency indicators, and icon badges.",
+    "deployments_section": "NEW FEATURE — Dedicated Deployment & Cloud Infrastructure section highlighting AWS (S3, CloudFront, EC2, IAM), Vercel (Edge Network, Automated Git Deployments, Serverless Functions), and Render (Node.js Web Services, PostgreSQL Hosting, Background Workers) with architectural diagrams, status chips, live deployment logs simulation, and environment setup details.",
+    "projects_section": "Asymmetric bento cards for Arcane, BuildNet, Trading Website, AI Website Builder, Notes Manager Application, and Data Structure Visualizer. Cards feature hover zoom, tech badges, live demo button, GitHub repo link, status badge ('In Progress' / 'Completed'), and interactive preview drawer.",
+    "leetcode_section": "Live sync statistics counter card displaying 62 solved problems (28 Easy, 31 Medium, 3 Hard) with interactive progress bars, breakdown ratios, and direct link to LeetCode profile.",
+    "contact_section": "Editorial message form with interactive inputs, validation, presentation-only toast notifications via Sonner, and direct social/email action cards (paladnan70930@gmail.com, LinkedIn, GitHub)."
+  },
+  "motion_and_animations": {
+    "hero_entrance": "Staggered fade-in slide up with Framer Motion or Motion library",
+    "project_cards": "Hover scale up (scale-102), border highlight shift, glass backdrop glow on hover",
+    "deployment_cards": "Pulsing live status indicator dot (green/emerald for operational), interactive tab switching between AWS, Vercel, and Render architecture workflows",
+    "scroll_reveal": "Scroll-triggered section entry animations using motion div opacity and y-offset"
+  },
+  "image_urls": {
+    "developer_workspace": "https://images.unsplash.com/photo-1587522384446-64daf3e2689a?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "architecture_minimal": "https://images.unsplash.com/photo-1639318533378-76d47c1e53f1?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "desk_setup": "https://images.unsplash.com/photo-1612736232022-691d6243202b?crop=entropy&cs=srgb&fm=jpg&q=85"
+  },
+  "testing_and_accessibility": {
+    "data_testid_requirement": "EVERY interactive button, link, tab, input, card, and theme switch MUST contain explicit role-based data-testid attributes (e.g. data-testid='nav-projects-link', data-testid='hero-hire-me-button', data-testid='deployment-tab-aws', data-testid='project-card-arcane').",
+    "contrast_ratio": "Stark 21:1 pure black text on white background for light mode; pure white text on midnight dark background for dark mode."
+  },
+  "instructions_to_main_agent": "1. Build a modern, responsive React + Tailwind CSS portfolio for Adnan Pal.\n2. In light mode, enforce a sleek, sharp white and black editorial theme (#FFFFFF background, #000000 borders and typography) with high contrast borders and mono labels.\n3. Preserve all original content (bio, Pillai College education 2023-2026, terminal json box, projects: Arcane, BuildNet, Trading Website, AI Website Builder, Notes Manager, Data Structure Visualizer, LeetCode 62 solved stats, email paladnan70930@gmail.com).\n4. Include the new Deployment & Services section covering AWS, Vercel, and Render with architecture cards and status badges.\n5. Use Motion library for card hover effects, smooth transitions, and tab switches.\n6. Add Sonner toast notifications on form submission and email/link copy actions.\n7. Ensure all buttons, links, inputs, and cards have data-testid attributes."
+}
