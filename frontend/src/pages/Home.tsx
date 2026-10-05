@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { useInView } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
   Activity,
@@ -145,9 +146,25 @@ const projects: Project[] = [
   },
 ];
 
+const leetcodeStats = [
+  { level: "Easy", count: 28, percentage: 45 },
+  { level: "Medium", count: 31, percentage: 50 },
+  { level: "Hard", count: 3, percentage: 5 },
+] as const;
+
 const reveal = {
   hidden: { opacity: 0, y: 28 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: "easeOut" } },
+} as const;
+
+const heroTitle = {
+  hidden: { opacity: 0, y: 22 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut", staggerChildren: 0.14, delayChildren: 0.1 } },
+} as const;
+
+const heroWord = {
+  hidden: { opacity: 0, y: 46, rotateX: -82 },
+  visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.72, ease: "easeOut" } },
 } as const;
 
 function SectionLabel({ number, children }: { number: string; children: string }) {
@@ -173,6 +190,35 @@ function ArrowLink({ href, children, testId, external = false }: { href: string;
       <span>{children}</span>
       <ArrowUpRight size={14} strokeWidth={1.8} aria-hidden="true" />
     </a>
+  );
+}
+
+function AnimatedLeetCodeStat({ level, count, percentage, index }: { level: string; count: number; percentage: number; index: number }) {
+  const statRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(statRef, { once: true, amount: 0.55 });
+  const [displayCount, setDisplayCount] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+    const start = performance.now();
+    let frameId = 0;
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / 850, 1);
+      setDisplayCount(Math.round(progress * count));
+      if (progress < 1) frameId = window.requestAnimationFrame(tick);
+    };
+    frameId = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frameId);
+  }, [count, isInView]);
+
+  return (
+    <div ref={statRef} data-testid={`leetcode-${level.toLowerCase()}-stat`}>
+      <div className="mb-2 flex justify-between font-mono text-[10px] uppercase tracking-[0.12em]"><span>{level}</span><span className="text-neutral-400">{percentage}%</span></div>
+      <div className="h-1 bg-white/20 dark:bg-black/15" role="progressbar" aria-label={`${level} solved percentage`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={isInView ? percentage : 0} data-testid={`leetcode-${level.toLowerCase()}-progress`}>
+        <motion.div initial={{ width: 0 }} animate={{ width: isInView ? `${percentage}%` : 0 }} transition={{ duration: 0.9, delay: index * 0.12, ease: "easeOut" }} className="h-1 bg-white dark:bg-black" />
+      </div>
+      <motion.p initial={{ opacity: 0, y: 8 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }} transition={{ duration: 0.35, delay: index * 0.12 }} className="mt-3 font-heading text-3xl font-bold" data-testid={`leetcode-${level.toLowerCase()}-count`}>{displayCount}</motion.p>
+    </div>
   );
 }
 
@@ -247,10 +293,10 @@ export default function Home() {
       <main id="top">
         <section className="relative mx-auto grid min-h-[720px] max-w-7xl items-end gap-10 px-4 pb-20 pt-36 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:px-12 lg:pb-28 lg:pt-44" data-testid="hero-section">
           <div className="absolute left-4 top-28 h-px w-20 bg-black sm:left-8 lg:left-12 dark:bg-white" data-testid="hero-rule" />
-          <motion.div initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="relative">
+          <motion.div initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }} className="relative">
             <motion.div variants={reveal} className="mb-8" data-testid="hero-kicker"><SectionLabel number="00" children="Portfolio.exe" /></motion.div>
-            <motion.h1 variants={reveal} className="max-w-4xl font-heading text-[clamp(3.75rem,10vw,9.5rem)] font-extrabold uppercase leading-[0.84] tracking-[-0.085em]" data-testid="hero-heading" aria-label="Hi, I'm Adnan Pal">
-              {['Hi,', "I'm", "Adnan", "Pal"].map((word, index) => <motion.span key={word} className={`mr-[0.16em] inline-block ${index === 3 ? "bg-black px-[0.08em] text-white dark:bg-white dark:text-black" : ""}`} variants={{ hidden: { opacity: 0, y: 32 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } } }}>{word}</motion.span>)}
+            <motion.h1 variants={heroTitle} className="max-w-4xl [perspective:900px] font-heading text-[clamp(3.75rem,10vw,9.5rem)] font-extrabold uppercase leading-[0.84] tracking-[-0.085em]" data-testid="hero-heading" aria-label="Hi, I'm Adnan Pal">
+              {['Hi,', "I'm", "Adnan", "Pal"].map((word, index) => <motion.span key={word} className={`mr-[0.16em] inline-block ${index === 3 ? "bg-black px-[0.08em] text-white dark:bg-white dark:text-black" : ""}`} variants={heroWord} data-testid={`hero-word-${index + 1}`}>{word}</motion.span>)}
             </motion.h1>
             <motion.div variants={reveal} className="mt-10 flex max-w-2xl flex-col gap-6 sm:flex-row sm:items-end" data-testid="hero-intro">
               <p className="max-w-xl text-lg leading-relaxed text-neutral-600 dark:text-neutral-300" data-testid="hero-description">Full-stack developer building real-world products, shipping clean interfaces, and obsessing over backend architecture.</p>
@@ -300,7 +346,7 @@ export default function Home() {
 
         <section id="projects" className="mx-auto max-w-7xl px-4 py-20 sm:px-8 sm:py-28 lg:px-12" data-testid="projects-section"><div className="flex flex-col justify-between gap-5 border-b-2 border-black pb-6 dark:border-white sm:flex-row sm:items-end"><div><SectionLabel number="04" children="Projects" /><h2 className="mt-5 font-heading text-4xl font-bold uppercase tracking-[-0.06em] sm:text-6xl" data-testid="projects-heading">Things I've built</h2></div><p className="max-w-xs font-mono text-[10px] uppercase leading-relaxed tracking-[0.14em] text-neutral-500" data-testid="projects-description">Experiments, products,<br />and a lot of shipped code.</p></div><div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-testid="projects-grid">{projects.map((project, index) => <motion.article key={project.name} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.16 }} variants={{ hidden: { opacity: 0, y: 26 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, delay: (index % 3) * 0.07 } } }} whileHover={{ y: -8 }} className="group relative overflow-hidden border border-black bg-white transition-shadow duration-300 hover:shadow-[7px_7px_0_#000] dark:border-white dark:bg-[#121215] dark:hover:shadow-[7px_7px_0_#fff]" data-testid={`project-card-${project.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}><div className={`relative h-44 overflow-hidden bg-gradient-to-br ${project.tone} p-5 transition-transform duration-500 group-hover:scale-[1.03] dark:from-neutral-800 dark:via-neutral-700 dark:to-neutral-900`}><div className="absolute inset-0 opacity-30" style={{ backgroundImage: "linear-gradient(135deg, transparent 45%, rgba(0,0,0,.24) 46%, transparent 47%), linear-gradient(45deg, transparent 45%, rgba(0,0,0,.18) 46%, transparent 47%)", backgroundSize: "28px 28px" }} /><div className="relative flex items-start justify-between"><span className="font-mono text-[11px] font-bold">/{project.number}</span><span className="flex items-center gap-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.12em]"><span className={`h-1.5 w-1.5 rounded-full ${project.status === "In Progress" ? "animate-pulse bg-amber-500" : "bg-emerald-600"}`} />{project.status}</span></div><div className="absolute bottom-5 left-5 font-heading text-5xl font-extrabold uppercase tracking-[-0.09em] text-black/80 dark:text-white/70">{project.name.split(" ")[0]}</div></div><div className="p-5 sm:p-6"><div className="flex items-start justify-between gap-4"><h3 className="font-heading text-2xl font-bold tracking-[-0.06em]" data-testid={`project-title-${project.number}`}>{project.name}</h3><ArrowUpRight size={18} className="shrink-0 transition-transform duration-200 group-hover:-translate-y-1 group-hover:translate-x-1" aria-hidden="true" /></div><p className="mt-4 min-h-[72px] text-sm leading-relaxed text-neutral-600 dark:text-neutral-400" data-testid={`project-description-${project.number}`}>{project.description}</p><div className="mt-5 flex flex-wrap gap-1.5" data-testid={`project-stack-${project.number}`}>{project.stack.map((tech) => <span key={tech} className="border border-black/15 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.08em] text-neutral-500 dark:border-white/15" data-testid={`project-tag-${tech.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>{tech}</span>)}</div><div className="mt-6 flex items-center gap-5 border-t border-black/10 pt-4 dark:border-white/10">{project.repo && <ArrowLink href={project.repo} children="Code" testId={`project-${project.number}-code-link`} external />}{project.demo && <ArrowLink href={project.demo} children="Live demo" testId={`project-${project.number}-demo-link`} external />}{!project.repo && !project.demo && <a href="mailto:paladnan70930@gmail.com?subject=AI%20Website%20Builder" className="font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-neutral-500 hover:text-black dark:hover:text-white" data-testid={`project-${project.number}-ask-link`}>Ask about it</a>}</div></div></motion.article>)}</div></section>
 
-        <section className="border-y border-black bg-black py-20 text-white dark:border-white dark:bg-white dark:text-black sm:py-24" data-testid="leetcode-section"><div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:px-12"><div><SectionLabel number="05" children="LeetCode" /><h2 className="mt-7 max-w-md font-heading text-5xl font-bold uppercase leading-[0.88] tracking-[-0.07em] sm:text-7xl" data-testid="leetcode-heading">Problems,<br /><span className="text-neutral-500">solved.</span></h2><p className="mt-7 max-w-sm text-sm leading-relaxed text-neutral-400 dark:text-neutral-600" data-testid="leetcode-description">Live problem-solving stats pulled straight from my LeetCode profile.</p><ArrowLink href="https://leetcode.com/u/paladnan70930/" children="View profile" testId="leetcode-profile-link" external /></div><div className="lg:pt-5"><div className="flex items-end justify-between border-b border-white/25 pb-6 dark:border-black/25"><div><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400 dark:text-neutral-600" data-testid="leetcode-live-label">Live stats</p><p className="mt-3 font-heading text-8xl font-bold leading-none tracking-[-0.1em] sm:text-[10rem]" data-testid="leetcode-total">62</p><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400 dark:text-neutral-600">problems solved</p></div><Activity size={44} strokeWidth={1} className="mb-3 text-neutral-500" aria-hidden="true" /></div><div className="mt-7 grid gap-6 sm:grid-cols-3" data-testid="leetcode-breakdown">{[["Easy", "28", "45%"], ["Medium", "31", "50%"], ["Hard", "3", "5%"]].map(([level, count, percentage]) => <div key={level} data-testid={`leetcode-${level.toLowerCase()}-stat`}><div className="mb-2 flex justify-between font-mono text-[10px] uppercase tracking-[0.12em]"><span>{level}</span><span className="text-neutral-400">{percentage}</span></div><div className="h-1 bg-white/20 dark:bg-black/15"><div className="h-1 bg-white dark:bg-black" style={{ width: percentage }} /></div><p className="mt-3 font-heading text-3xl font-bold">{count}</p></div>)}</div><p className="mt-9 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-neutral-500" data-testid="leetcode-refresh-note"><Sparkles size={13} aria-hidden="true" /> Auto-refreshes every 5 min · syncs on return</p></div></div></section>
+        <section className="border-y border-black bg-black py-20 text-white dark:border-white dark:bg-white dark:text-black sm:py-24" data-testid="leetcode-section"><div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-8 lg:grid-cols-[0.78fr_1.22fr] lg:px-12"><div><SectionLabel number="05" children="LeetCode" /><h2 className="mt-7 max-w-md font-heading text-5xl font-bold uppercase leading-[0.88] tracking-[-0.07em] sm:text-7xl" data-testid="leetcode-heading">Problems,<br /><span className="text-neutral-500">solved.</span></h2><p className="mt-7 max-w-sm text-sm leading-relaxed text-neutral-400 dark:text-neutral-600" data-testid="leetcode-description">Live problem-solving stats pulled straight from my LeetCode profile.</p><ArrowLink href="https://leetcode.com/u/paladnan70930/" children="View profile" testId="leetcode-profile-link" external /></div><div className="lg:pt-5"><div className="flex items-end justify-between border-b border-white/25 pb-6 dark:border-black/25"><div><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400 dark:text-neutral-600" data-testid="leetcode-live-label">Live stats</p><p className="mt-3 font-heading text-8xl font-bold leading-none tracking-[-0.1em] sm:text-[10rem]" data-testid="leetcode-total">62</p><p className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400 dark:text-neutral-600">problems solved</p></div><Activity size={44} strokeWidth={1} className="mb-3 text-neutral-500" aria-hidden="true" /></div><div className="mt-7 grid gap-6 sm:grid-cols-3" data-testid="leetcode-breakdown">{leetcodeStats.map((stat, index) => <AnimatedLeetCodeStat key={stat.level} {...stat} index={index} />)}</div><p className="mt-9 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-neutral-500" data-testid="leetcode-refresh-note"><Sparkles size={13} aria-hidden="true" /> Auto-refreshes every 5 min · syncs on return</p></div></div></section>
 
         <section id="contact" className="mx-auto max-w-7xl px-4 py-20 sm:px-8 sm:py-28 lg:px-12" data-testid="contact-section"><div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr]"><div><SectionLabel number="06" children="Contact" /><h2 className="mt-7 max-w-lg font-heading text-5xl font-bold uppercase leading-[0.88] tracking-[-0.07em] sm:text-7xl" data-testid="contact-heading">Let's<br /><span className="text-neutral-400">connect.</span></h2><p className="mt-8 max-w-md text-lg leading-relaxed text-neutral-600 dark:text-neutral-400" data-testid="contact-description">Open to internship roles, freelance projects, and interesting collaborations. Drop a line.</p><div className="mt-10 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.15em]" data-testid="contact-availability"><span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" /> Available for internships & freelance work</div></div><div className="border-t-2 border-black pt-6 dark:border-white"><div className="grid gap-3" data-testid="contact-links-grid"><a href="mailto:paladnan70930@gmail.com" className="group flex items-center justify-between border-b border-black/15 py-5 transition-[padding,color] duration-200 hover:pl-2 hover:text-neutral-500 dark:border-white/15" data-testid="contact-email-link"><span className="flex items-center gap-4"><Mail size={20} strokeWidth={1.5} aria-hidden="true" /><span><span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">Email</span><span className="mt-1 block text-lg">paladnan70930@gmail.com</span></span></span><ArrowUpRight size={19} aria-hidden="true" /></a><a href="https://www.linkedin.com/in/adnan-pal-140534348" target="_blank" rel="noreferrer" className="group flex items-center justify-between border-b border-black/15 py-5 transition-[padding,color] duration-200 hover:pl-2 hover:text-neutral-500 dark:border-white/15" data-testid="contact-linkedin-link"><span className="flex items-center gap-4"><Linkedin size={20} strokeWidth={1.5} aria-hidden="true" /><span><span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">LinkedIn</span><span className="mt-1 block text-lg">linkedin.com/in/adnanpal</span></span></span><ExternalLink size={18} aria-hidden="true" /></a><a href="https://github.com/adnanpal" target="_blank" rel="noreferrer" className="group flex items-center justify-between border-b border-black/15 py-5 transition-[padding,color] duration-200 hover:pl-2 hover:text-neutral-500 dark:border-white/15" data-testid="contact-github-link"><span className="flex items-center gap-4"><Github size={20} strokeWidth={1.5} aria-hidden="true" /><span><span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-400">GitHub</span><span className="mt-1 block text-lg">github.com/adnanpal</span></span></span><ExternalLink size={18} aria-hidden="true" /></a></div><div className="mt-10 flex flex-wrap gap-3"><a href="mailto:paladnan70930@gmail.com?subject=Hiring%20Inquiry" className="inline-flex items-center gap-3 bg-black px-5 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-white transition-[transform,background] duration-200 hover:-translate-y-1 hover:bg-neutral-700 dark:bg-white dark:text-black dark:hover:bg-neutral-200" data-testid="contact-hire-me-button">Hire me <ArrowUpRight size={15} aria-hidden="true" /></a><button type="button" onClick={() => void copyEmail()} className="inline-flex items-center gap-2 border border-black px-4 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.12em] transition-[background,color] duration-200 hover:bg-black hover:text-white dark:border-white dark:hover:bg-white dark:hover:text-black" data-testid="contact-copy-email-button">{copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}{copied ? "Copied" : "Copy email"}</button></div></div></div></section>
       </main>
