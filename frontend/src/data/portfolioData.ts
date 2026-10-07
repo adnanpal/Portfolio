@@ -7,7 +7,7 @@ export const OWNER = {
   githubHref: "https://github.com/adnanpal",
   leetcode: "paladnan70930",
   leetcodeHref: "https://leetcode.com/u/paladnan70930/",
-  resumeHref: "/AdnanPal_Resume.pdf",
+  resumeHref: "/AdnanResume.pdf",
   location: "Navi Mumbai, India",
   college: "Pillai College, Navi Mumbai",
   batch: "2023–2026",
