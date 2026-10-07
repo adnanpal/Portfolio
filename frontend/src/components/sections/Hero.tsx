@@ -45,7 +45,7 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      <div className="relative lg:-translate-x-[4%] lg:-translate-y-56 lg:w-[108%] xl:-translate-y-72" data-testid="hero-terminal-card">
+      <div className="relative lg:-translate-x-[4%] lg:-translate-y-[184px] lg:w-[108%] xl:-translate-y-[248px]" data-testid="hero-terminal-card">
         <motion.div initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.35 }} className="relative">
           <div className="absolute -right-2 -top-2 h-full w-full border border-[var(--border-soft)]" aria-hidden="true" />
           <div className="relative border border-[var(--border-strong)] bg-[var(--surface)] p-5 shadow-[8px_8px_0_var(--text)] sm:p-7 lg:p-8">
