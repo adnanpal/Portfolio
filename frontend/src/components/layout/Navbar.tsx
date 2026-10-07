@@ -4,7 +4,7 @@ import { OWNER } from "@/data/portfolioData";
 import { ArrowUpRightIcon, CloseIcon, DownloadIcon, MenuIcon, MoonIcon, SunIcon } from "@/components/icons/Icons";
 import { useTheme } from "@/context/ThemeContext";
 
-const NAV_LINKS = ["About", "Skills", "Projects", "LeetCode", "Contact"] as const;
+const NAV_LINKS = ["About", "Skills", "Deployments", "Projects", "LeetCode", "Contact"] as const;
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
