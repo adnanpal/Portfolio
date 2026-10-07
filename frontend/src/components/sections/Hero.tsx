@@ -34,9 +34,9 @@ export default function Hero() {
         <motion.div variants={reveal} className="mt-8 flex min-h-8 items-center gap-2" data-testid="hero-typewriter">
           <span className="font-mono text-sm uppercase tracking-[0.12em] text-[var(--text-muted)] sm:text-base">{role}</span><span className="inline-block h-5 w-0.5 animate-pulse bg-[var(--text)]" aria-hidden="true" />
         </motion.div>
-        <motion.div variants={reveal} className="mt-8 flex max-w-2xl flex-col gap-6 sm:flex-row sm:items-end">
+        <motion.div variants={reveal} className="mt-8 max-w-2xl">
           <p className="max-w-xl text-lg leading-relaxed text-[var(--text-muted)]" data-testid="hero-description">B.Sc CS student at {OWNER.college} — building real-world full-stack apps, shipping clean UIs, and obsessing over backend architecture.</p>
-          <p className="shrink-0 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--text-dim)]" data-testid="hero-location"><MapPinIcon size={14} className="mb-2" aria-hidden="true" />{OWNER.location}</p>
+          <p className="mt-6 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--text-dim)]" data-testid="hero-location"><MapPinIcon size={14} aria-hidden="true" />{OWNER.location}</p>
         </motion.div>
         <motion.div variants={reveal} className="mt-10 flex flex-wrap items-center gap-4" data-testid="hero-actions">
           <a href="#projects" className="inline-flex items-center gap-3 bg-[var(--text)] px-5 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--bg)] transition-transform duration-200 hover:-translate-y-1" data-testid="hero-projects-link">View projects <ArrowDownRightIcon size={15} aria-hidden="true" /></a>
