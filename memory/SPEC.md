@@ -7,8 +7,8 @@ One-page personal portfolio for Adnan Pal, a B.Sc Computer Science student and f
 ## Sections and content
 
 - Hero: staggered 3D word-reveal for “Hi, I’m Adnan Pal”, location, terminal-style profile JSON, project/contact CTAs
-- About: Pillai College education (2023–2026), full-stack focus, availability, resume link
-- Skills: Frontend, Backend, Database, and Tools groups
+- About: animated section heading, Pillai College education (2023–2026), full-stack focus, availability, resume link
+- Skills: animated section heading plus Frontend, Backend, Database, and Tools groups
 - Deployments: interactive AWS, Vercel, and Render platform tabs with services and deployment-log visuals
 - Projects: Arcane, BuildNet, Trading Website, AI Website Builder, Notes Manager, and Data Structure Visualizer
 - LeetCode: 62 solved problems with 28 Easy, 31 Medium, and 3 Hard; count-up numbers and scroll-triggered progress bars
