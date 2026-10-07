@@ -45,23 +45,25 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.35 }} className="relative lg:mb-1" data-testid="hero-terminal-card">
-        <div className="absolute -right-2 -top-2 h-full w-full border border-[var(--border-soft)]" aria-hidden="true" />
-        <div className="relative border border-[var(--border-strong)] bg-[var(--surface)] p-5 shadow-[8px_8px_0_var(--text)] sm:p-7">
-          <div className="mb-10 flex items-center justify-between border-b border-[var(--border-soft)] pb-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--text-muted)]" data-testid="terminal-header"><span className="flex items-center gap-2"><TerminalIcon size={13} aria-hidden="true" /> ~/adnan</span><span className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />online</span></div>
-          <div className="space-y-5 font-mono text-xs leading-relaxed sm:text-sm" data-testid="terminal-content">
-            <p><span className="mr-2 text-[var(--text-dim)]">$</span><span className="text-[var(--text-muted)]">cat</span> adnan.json</p>
-            <div className="border-l-2 border-[var(--text)] pl-4 text-[var(--text-muted)]">
-              <p><span className="text-[var(--text)]">name:</span> "{OWNER.name}",</p>
-              <p><span className="text-[var(--text)]">college:</span> "{OWNER.college}",</p>
-              <p><span className="text-[var(--text)]">batch:</span> "{OWNER.batch}",</p>
-              <p><span className="text-[var(--text)]">focus:</span> [React, Node, AI/ML],</p>
-              <p><span className="text-[var(--text)]">status:</span> "Open to internships"</p>
+      <div className="relative lg:-translate-x-[4%] lg:-translate-y-56 lg:w-[108%] xl:-translate-y-72" data-testid="hero-terminal-card">
+        <motion.div initial={{ opacity: 0, x: 28 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.35 }} className="relative">
+          <div className="absolute -right-2 -top-2 h-full w-full border border-[var(--border-soft)]" aria-hidden="true" />
+          <div className="relative border border-[var(--border-strong)] bg-[var(--surface)] p-5 shadow-[8px_8px_0_var(--text)] sm:p-7 lg:p-8">
+            <div className="mb-10 flex items-center justify-between border-b border-[var(--border-soft)] pb-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--text-muted)]" data-testid="terminal-header"><span className="flex items-center gap-2"><TerminalIcon size={13} aria-hidden="true" /> ~/adnan</span><span className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />online</span></div>
+            <div className="space-y-5 font-mono text-xs leading-relaxed sm:text-sm" data-testid="terminal-content">
+              <p><span className="mr-2 text-[var(--text-dim)]">$</span><span className="text-[var(--text-muted)]">cat</span> adnan.json</p>
+              <div className="border-l-2 border-[var(--text)] pl-4 text-[var(--text-muted)]">
+                <p><span className="text-[var(--text)]">name:</span> "{OWNER.name}",</p>
+                <p><span className="text-[var(--text)]">college:</span> "{OWNER.college}",</p>
+                <p><span className="text-[var(--text)]">batch:</span> "{OWNER.batch}",</p>
+                <p><span className="text-[var(--text)]">focus:</span> [React, Node, AI/ML],</p>
+                <p><span className="text-[var(--text)]">status:</span> "Open to internships"</p>
+              </div>
+              <p><span className="mr-2 text-[var(--text-dim)]">$</span><span className="inline-block h-4 w-2 animate-pulse bg-[var(--text)] align-middle" /></p>
             </div>
-            <p><span className="mr-2 text-[var(--text-dim)]">$</span><span className="inline-block h-4 w-2 animate-pulse bg-[var(--text)] align-middle" /></p>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }

@@ -9,6 +9,7 @@ const NAV_LINKS = ["About", "Skills", "Deployments", "Projects", "LeetCode", "Co
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [pendingSection, setPendingSection] = useState<string | null>(null);
   const { theme, toggleTheme } = useTheme();
   const hireMeHref = `mailto:${OWNER.email}?subject=Hiring%20Inquiry&body=Hi%20Adnan%2C%20I%20came%20across%20your%20portfolio%20and%20would%20love%20to%20discuss%20an%20opportunity.`;
 
@@ -18,13 +19,26 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (menuOpen || !pendingSection) return;
+    const timer = window.setTimeout(() => {
+      document.getElementById(pendingSection)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setPendingSection(null);
+    }, 300);
+    return () => window.clearTimeout(timer);
+  }, [menuOpen, pendingSection]);
+
   const navigateTo = (event: MouseEvent<HTMLAnchorElement>, section: string) => {
     event.preventDefault();
     const target = document.getElementById(section);
     if (!target) return;
-    setMenuOpen(false);
     window.history.pushState(null, "", `#${section}`);
-    window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - 84), behavior: "smooth" });
+    if (menuOpen) {
+      setPendingSection(section);
+      setMenuOpen(false);
+      return;
+    }
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
@@ -58,7 +72,7 @@ export default function Navbar() {
 
       <AnimatePresence>
         {menuOpen && (
-          <motion.nav initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.28 }} className="overflow-hidden border-t border-[var(--border-soft)] bg-[var(--bg)] lg:hidden" aria-label="Mobile navigation" data-testid="mobile-navigation">
+          <motion.nav initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.22, ease: "easeOut" }} className="border-t border-[var(--border-soft)] bg-[var(--bg)] lg:hidden" aria-label="Mobile navigation" data-testid="mobile-navigation">
             <div className="px-4 pb-5 sm:px-8">
               {NAV_LINKS.map((label, index) => {
                 const slug = label.toLowerCase();
