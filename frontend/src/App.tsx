@@ -1,11 +1,32 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "@/pages/Home";
+import { ThemeProvider } from "@/context/ThemeContext";
+import Navbar from "@/components/layout/Navbar";
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Skills from "@/components/sections/Skills";
+import Projects from "@/components/sections/Projects/Projects";
+import LeetCode from "@/components/sections/LeetCode";
+import Contact from "@/components/sections/Contacts/Contact";
 
-// One <Route> per page in src/pages; BrowserRouter already wraps this in main.tsx.
+function PortfolioShell() {
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-[var(--bg)] text-[var(--text)]" data-testid="portfolio-page">
+      <Navbar />
+      <main>
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <LeetCode />
+        <Contact />
+      </main>
+    </div>
+  );
+}
+
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-    </Routes>
+    <ThemeProvider>
+      <PortfolioShell />
+    </ThemeProvider>
   );
 }

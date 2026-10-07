@@ -2,26 +2,25 @@
 
 ## Product
 
-One-page personal portfolio for Adnan Pal, a B.Sc Computer Science student and full-stack developer in Navi Mumbai. The default light theme is editorial monochrome: white surfaces, black type, sharp borders, and generous whitespace. A theme toggle also supports a midnight dark variant.
+One-page personal portfolio for Adnan Pal, rebuilt from the user's uploaded component architecture. The frontend uses an editorial monochrome light theme with a midnight dark variant, responsive navigation, sharp borders, generous whitespace, and one-time scroll-triggered motion. Backend files are intentionally untouched.
 
 ## Sections and content
 
 - Hero: staggered 3D word-reveal for “Hi, I’m Adnan Pal”, location, terminal-style profile JSON, project/contact CTAs
 - About: animated section heading, Pillai College education (2023–2026), full-stack focus, availability, resume link
 - Skills: animated section heading plus Frontend, Backend, Database, and Tools groups
-- Deployments: one-time, line-by-line text-up reveal for “Ship it / Scale it”, plus interactive AWS, Vercel, and Render platform tabs with services and deployment-log visuals
 - Projects: Arcane, BuildNet, Trading Website, AI Website Builder, Notes Manager, and Data Structure Visualizer
-- LeetCode: 62 solved problems with 28 Easy, 31 Medium, and 3 Hard; count-up numbers and scroll-triggered progress bars
-- Contact: mailto, LinkedIn, GitHub, hire CTA, and copy-email interaction
+- LeetCode: live LeetPulse requests for solved totals, difficulty breakdown, and recent submissions; 5-minute polling and visibility refresh remain intact
+- Contact: preserved mailto form, LinkedIn, GitHub, hire CTA, and resume download
 
 ## Key flows
 
 1. Visitors use the sticky navigation or hero CTAs to smoothly jump through the one-page portfolio, including from the mobile menu with a fixed-header offset.
-2. Visitors switch between AWS, Vercel, and Render tabs to review deployment capabilities.
-3. Visitors open project repositories/live demos, the resume, or social links in their existing destinations.
-4. Visitors use the mailto contact links or copy the email address. There is no backend contact form.
-5. Visitors can switch between the default light mode and dark mode.
+2. Visitors open project repositories/live demos, the resume, or social links in their existing destinations.
+3. Visitors view live LeetCode stats and optionally expand recent submissions.
+4. Visitors submit the existing contact form, which validates required fields and opens their configured email client through a mailto URL.
+5. Visitors can switch between the default light mode and dark mode; preference persists locally.
 
 ## Data and integrations
 
-The portfolio is content-driven and does not require a third-party API or authentication. The existing FastAPI/Mongo skeleton status routes remain available but are not used by the portfolio UI. Contact is presentation-only via mailto and external social links.
+The frontend calls the existing public LeetPulse API directly for LeetCode stats and recent submissions. It needs no API key. The FastAPI/Mongo backend remains unchanged and is not used by the portfolio UI. Contact uses mailto rather than a backend endpoint.
